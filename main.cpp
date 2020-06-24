@@ -1,10 +1,14 @@
 #include "App.h"
+#include "Diary.h"
+#include <iostream>
 
 int main(int argc, char *argv[]){
+    using namespace std;
 
-    instructions(argv[0]);
-    addText(argv[2]);
-    writeText("file.txt");
-    listText("file.txt");
+    Diary meudiario;
+    newDiary("meudiario.txt", &meudiario);
+    addText(argv[1], &meudiario);
+    cout << meudiario.message[0].text << endl;
+    killDiary(&meudiario);
     return 0;
 }

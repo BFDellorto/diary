@@ -1,7 +1,7 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 
-#include <stdio.h>
+#include <iostream>
 #include <string.h>
 
 struct Message{

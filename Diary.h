@@ -1,7 +1,7 @@
 #ifndef DIARY_HPP
 #define DIARY_HPP
 
-#include <stdio.h>
+#include <iostream>
 #include "Message.h"
 #include <string.h>
 
