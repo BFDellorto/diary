@@ -4,12 +4,14 @@
 
 int main(int argc, char *argv[]){
     using namespace std;
-
     Diary meudiario("meudiario.txt");
-    addText(argv[1], &meudiario);
-    cout << meudiario.message[0].date << endl;
-    cout << meudiario.message[0].time << endl;
-    cout << meudiario.message[0].text << endl;
+    addText("Hello there", &meudiario);
+    addText("Nice place here", &meudiario);
+    addText("What a shame", &meudiario);
+    saveText(&meudiario);
+
+    findText("a shame", &meudiario);
+    findText("place", &meudiario);
 
     return 0;
 }
