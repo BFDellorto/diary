@@ -5,36 +5,23 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 void instructions(const std::string& prog_name){
 
 };
 void addText(std::string mess, Diary* diary){
-    (*diary).msize++;
-    int pos = (*diary).msize-1;
-    int cap = (*diary).mcap;
-    int i;
-    if(pos>=cap){
-        cap *= 2;
-        Message* new_array = new Message[cap];
-        for(i=0; i<pos; i++){
-            new_array[i].text = (*diary).message[i].text;
-            new_array[i].date = (*diary).message[i].date;
-            new_array[i].time = (*diary).message[i].time;
-        }
-        delete[] (*diary).message;
-        (*diary).message = new_array;
-        (*diary).mcap = cap;
-    }
-    (*diary).message[pos].text = mess;
-    (*diary).message[pos].date = get_current_date();
-    (*diary).message[pos].time = get_current_time();
+    Message newmessage;
+    newmessage.text = mess;
+    newmessage.date = get_current_date();
+    newmessage.time = get_current_time();
+    ((*diary).note).push_back(newmessage);
 };
 
 void saveText(Diary* diary){
     std::fstream arquivo;
     std::string lastdate, fileline;
-    int i, flag = 0;
+    int flag = 0;
     
     arquivo.open((*diary).filename, std::fstream::app);
     if (arquivo.fail()){
@@ -46,7 +33,7 @@ void saveText(Diary* diary){
     if (arquivo.fail()){
         std::cerr << "ERROR1. Nao foi possivel abrir o arquivo" << std::endl;
     }
-    lastdate = "# " + (*diary).message[0].date;
+    lastdate = "# " + (*diary).note[0].date;
     while (!arquivo.eof()){
         getline(arquivo, fileline);
         //flag que detecta se a data atual ja existe
@@ -60,24 +47,25 @@ void saveText(Diary* diary){
     if (arquivo.fail()){
         std::cerr << "ERROR2. Nao foi escrever no arquivo" << std::endl;
     }
-    lastdate = (*diary).message[0].date;
-    for(i=0;i<(*diary).msize;i++){
-        if (lastdate != (*diary).message[i].date){
-            lastdate = (*diary).message[i].date;
+    std::vector<Message>::iterator it = ((*diary).note).begin();
+    lastdate = (*it).date;
+    for(it ; it != ((*diary).note).end(); ++it){
+        if (lastdate != (*it).date){
+            lastdate = (*it).date;
             flag = 0;
         }
         if (flag == 1){
-            arquivo << "- " << (*diary).message[i].time << " " << (*diary).message[i].text << std::endl;
+            arquivo << "- " << (*it).time << " " << (*it).text << std::endl;
         }else{
-            arquivo << std::endl << "# " << (*diary).message[i].date << std::endl << std::endl;
-            arquivo << "- " << (*diary).message[i].time << " " << (*diary).message[i].text << std::endl;
+            arquivo << std::endl << "# " << (*it).date << std::endl << std::endl;
+            arquivo << "- " << (*it).time << " " << (*it).text << std::endl;
         }
         flag = 1;
     }
     arquivo.close();
 };
 
-void findText(std::string text, Diary* diary){
+void findText(std::string text, Diary* diary, std::vector<std::string>* results){
     std::fstream arquivo;
     std::string fileline;
     std::size_t found;
@@ -93,11 +81,9 @@ void findText(std::string text, Diary* diary){
         getline(arquivo, fileline);
         found = fileline.find(text);
         if (found != std::string::npos){
-            std::cout << fileline << std::endl;
-            break;
+            (*results).push_back(fileline);
         }
     }
-
     arquivo.close();
 };
 

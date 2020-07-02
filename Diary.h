@@ -4,21 +4,16 @@
 #include <iostream>
 #include "Message.h"
 #include <string.h>
+#include <vector>
 
 struct Diary{
     std::string filename;
-    Message* message;
-    size_t msize;
-    size_t mcap;
+    std::vector<Message> note;
     
     Diary(const std::string& file_name){
         filename = file_name;
-        mcap = 1;
-        msize = 0;
-        message = new Message[mcap];
     }
     ~Diary(){
-        delete[] message;
     }
 };
 
