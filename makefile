@@ -1,4 +1,11 @@
-comm=g++ -std=c++11
+COMP      := g++ -std=c++11
+CPPFLAGs  := -I include
+CFLAGS    := -Wall -pedantic -ansi
 
-diarymake: main.cpp app.cpp
-	$(comm) main.cpp app.cpp -o exec
+diary: src/main.cpp src/app.cpp
+	$(COMP) $(CPPFLAGs) $(CFLAGS) -o diary src/main.cpp src/app.cpp
+
+.PHONY: clean
+clean:
+	-rm diary
+	-rm *.txt
