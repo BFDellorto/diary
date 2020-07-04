@@ -21,6 +21,10 @@ Um programa que escreve mensagens em um arquivo salvando a hora e a data de quan
   * findText     : Acha certas mensagens dentro da struct 'Diary' baseado em um texto passado, retornando um vetor de mensagens contendo as mensagens encontradas
   * getText      : Recupera as mensagens do arquivo para a struct 'Diary'
   * listText     : Lista todas as mensagens da struct 'Diary'
+  
+#### arquivos
+  * As funcoes se encontram declaradas em App.h e descritas em app.cpp
+  * main.cpp eh onde se encontram os parametros de execucao
 
 
   
