@@ -1,0 +1,2 @@
+path=../diary.txt
+default_format=[%d %t] -> %m

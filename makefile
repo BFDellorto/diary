@@ -8,4 +8,3 @@ diary: src/main.cpp src/app.cpp
 .PHONY: clean
 clean:
 	-rm diary
-	-rm *.txt
